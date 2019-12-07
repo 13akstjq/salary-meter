@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "How much did i earn?",
-  "description": "calc my earn now ",
+  "name": "Salary meter",
+  "description": "calc my earn now- ",
   "version": "1.0",
   "permissions": ["tabs", "storage"],
   "chrome_url_overrides": {
