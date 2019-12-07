@@ -2,7 +2,9 @@ body {
   background: linear-gradient(36deg, #55efc4, #2ecc71);
   margin: 0;
   height: 100vh;
-  /* padding: 0; */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 ul,
@@ -18,51 +20,54 @@ input {
   padding: 0.3em;
 }
 
-.option__icon {
-  cursor: pointer;
-  position: fixed;
-  right: 1em;
-  top: 1em;
-}
-
-.option__container {
-  position: fixed;
-  right: 30px;
-  top: 50px;
-  display: inline-block;
-  background-color: ghostwhite;
-  border-radius: 0.5em;
-  transition: 0.3s ease-in;
-}
-
-.option__header {
+.main__content {
+  position: relative;
+  width: 700px;
+  height: 90vh;
+  /* background: gold; */
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.option__container .option__list {
-  padding: 0.5em;
+.main__content .land {
+  width: 300px;
+  height: 300px;
+  background-color: green;
+  transform: perspective(500px) rotate(-40deg) skew(25deg);
 }
 
-.option__container .option__item {
+.land::before {
+  content: "";
+  width: 300px;
+  height: 100%;
+  background-color: darkblue;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transform: skewY(-38deg) translate(-300px, -117px);
+}
+
+.land::after {
+  content: "";
+  width: 100%;
+  height: 235px;
+  background-color: darkblue;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: skewX(-52deg) translate(150px, 235px);
+}
+
+.main__content .meter__container {
+  position: absolute;
+  top: 50%;
+  width: 80%;
+  height: 50%;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  margin-bottom: 1em;
-  align-items: center;
+  grid-template-rows: 3fr 7fr;
+  margin: auto;
 }
 
-.option__container .option__item .option__title {
-  text-align: right;
-}
-
-.option__container .option__item .option__input {
-  margin-left: 0.3em;
-}
-
-.option__container .option__list {
-}
-
-.option__show {
-  transform: translateX(300px);
+.main__content .meter__container .meter__board {
+  background-color: black;
 }

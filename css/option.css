@@ -1,0 +1,49 @@
+.option__icon {
+  cursor: pointer;
+  position: fixed;
+  right: 1em;
+  top: 1em;
+}
+
+.option__container {
+  position: fixed;
+  right: 30px;
+  top: 50px;
+  display: inline-block;
+  background-color: ghostwhite;
+  border-radius: 0.5em;
+  transition: 0.3s ease-in;
+}
+
+.option__header {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.option__container .option__list {
+  padding: 0.5em;
+}
+
+.option__container .option__item {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 1em;
+  align-items: center;
+}
+
+.option__container .option__item .option__title {
+  text-align: right;
+}
+
+.option__container .option__item .option__input {
+  margin-left: 0.3em;
+  text-align: center;
+}
+
+.option__container .option__list {
+}
+
+.option__hide {
+  transform: translateX(300px);
+}
