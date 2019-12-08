@@ -1,19 +1,29 @@
 // dom
 const date = document.querySelector("#date");
-
+const salaryFront = document.querySelector("#salaryFront");
+const meter = document.querySelector("#meter");
 // 변수
 let salaryDate,
   preTexSalary,
   postTexSalary,
   monthSalary,
-  insurance = [];
+  insurance = [],
+  nowSalary,
+  money,
+  ms = 100;
+
+// 오늘 날짜를 가져오는 함수
+const getToday = () => {
+  const toDay = new Date();
+  const year = toDay.getFullYear();
+  const month = toDay.getMonth() + 1;
+  const date = (toDay.getDate() + "").padStart(2, 0) / 1;
+  return { toDay, year, month, date };
+};
 
 // 오늘 날짜를 셋팅하는 메소드
 const settingDate = () => {
-  const toDay = new Date();
-  const year = toDay.getFullYear();
-  const month = toDay.getMonth + 1;
-  const date = (toDay.getDate() + "").padStart(2, 0);
+  const { year, month, date } = getToday();
   date.innerHTML = `${year}.${month}.${date}`;
 };
 
@@ -33,11 +43,111 @@ const getStorageData = () => {
     if (salaryDate) salaryDateInput.value = salaryDate;
     chrome.storage.sync.get("preTexSalary", ({ preTexSalary }) => {
       if (preTexSalary) preTexSalaryInput.value = preTexSalary;
-      if (salaryDate && preTexSalary) {
-        console.log(salaryDate, preTexSalary, "start");
-      }
+      if (salaryDate && preTexSalary) start(salaryDate, preTexSalary);
     });
   });
+};
+
+const toStringFormat = money => {
+  money = money.split(".");
+  money[0] = money[0].split(",").join("");
+  money = money.join(".");
+  return money;
+};
+
+const toMoneyFormat = money => {
+  money = money.split(".");
+  let front = money[0],
+    len = front.length,
+    res = money[0][len - 1];
+
+  // console.log(money[0][len - 1]);
+  for (let i = len - 2; i >= 0; i--) {
+    if ((len - 1 - i) % 3 == 0) res = "," + res;
+    res = money[0][i] + res;
+  }
+  money[0] = res;
+  money = money.join(".");
+  return money;
+};
+// 월급 날짜와 세전 연봉을 넣어주면 타이머를 시작시키는 메소드
+const start = (salaryDate, preTexSalary) => {
+  // 현재 번 돈 구하기
+  const lastSalaryDate = calcLastSalaryDate(salaryDate),
+    nextSalaryDate = calcNextSalaryDate(salaryDate),
+    postTexMonthSalary = getPostTexSalary(preTexSalary) * 10000,
+    totalTime = (nextSalaryDate.getTime() - lastSalaryDate.getTime()) / 1000,
+    salaryPerSec = (postTexMonthSalary / totalTime).toFixed(2) / 1;
+
+  nowSalary = getNowSalary(salaryPerSec, lastSalaryDate);
+  money = toMoneyFormat(nowSalary.toFixed(2));
+
+  money = money.split(".");
+  salaryFront.innerHTML = money[0] + ".";
+  salaryBack.innerHTML = money[1].padStart(2, 0);
+  startMeter(salaryPerSec);
+};
+
+// 월급 증가
+const increaseSalary = salaryPerSec => {
+  nowSalary += salaryPerSec;
+  money = toMoneyFormat(nowSalary.toFixed(2));
+  money = money.split(".");
+  salaryFront.innerHTML = money[0] + ".";
+  salaryBack.innerHTML = money[1].padStart(2, 0);
+};
+
+// 미터기 시작
+const startMeter = salaryPerSec => {
+  setInterval(() => {
+    if (ms == 0) increaseSalary(salaryPerSec);
+    ms = ms <= 0 ? 100 : ms - 1;
+    meter.innerHTML = ms;
+  }, 10);
+};
+
+// 현재까지 번 돈 구하기
+const getNowSalary = (salaryPerSec, lastSalaryDate) => {
+  const toDay = new Date();
+  return ((toDay.getTime() - lastSalaryDate.getTime()) / 1000) * salaryPerSec;
+};
+
+// 이전 월급 날짜 구하기
+const calcLastSalaryDate = salaryDate => {
+  const { year, month, date } = getToday();
+  let lastYear = year,
+    lastMonth;
+  if (date < salaryDate) {
+    lastMonth = month - 1;
+    if (lastMonth == 0) {
+      lastMonth = 12;
+      lastYear = year - 1;
+    }
+  } else {
+    lastMonth = month;
+  }
+
+  const lastSalaryDate = `${lastYear}-${lastMonth}-${salaryDate}`;
+  return new Date(lastSalaryDate);
+};
+
+// 다음 월급 날짜 구하기
+const calcNextSalaryDate = salaryDate => {
+  const { year, month, date } = getToday();
+  let nextYear = year,
+    nextMonth;
+  if (date >= salaryDate) {
+    nextMonth = month + 1;
+    if (nextMonth == 12) {
+      nextMonth = 1;
+      nextYear = year + 1;
+    }
+  } else {
+    nextMonth = month;
+  }
+
+  const nextSalaryDate = `${nextYear}-${nextMonth}-${salaryDate}`;
+  return new Date(nextSalaryDate);
 };
 
 // 크롬 스토리지 초기화 메소드
@@ -45,16 +155,15 @@ const clearStorage = () => {
   chrome.storage.sync.clear();
 };
 // clearStorage();
+
 // 월급 날짜를 셋팅하는 메소드
 const setSalaryDate = date => {
   salaryDate = date;
 };
 
-// 세전 연봉을 셋팅하는 메소드
-const setSalary = salary => {
-  preTexSalary = salary;
-  postTexSalary = preTexSalary - calcTex(preTexSalary);
-  monthSalary = postTexSalary / 12;
+// 세전 연봉을 입력하면 세후 월급을 구해주는 메소드
+const getPostTexSalary = preTexSalary => {
+  return (preTexSalary - calcTex(preTexSalary)) / 12;
 };
 
 // 세금을 계산하는 메소드
@@ -82,7 +191,8 @@ const init = () => {
   setInsurance();
   settingDate();
   getStorageData();
-  if (preTexSalary && salaryDate) setSalary(preTexSalary);
+
+  // if (preTexSalary && salaryDate) setSalary(preTexSalary);
 };
 
 // 월급미터기 초기화
