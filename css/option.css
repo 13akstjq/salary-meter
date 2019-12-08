@@ -13,6 +13,8 @@
   background-color: ghostwhite;
   border-radius: 0.5em;
   transition: 0.3s ease-in;
+  padding: 0.7em;
+  z-index: 10;
 }
 
 .option__header {
@@ -22,7 +24,6 @@
 }
 
 .option__container .option__list {
-  padding: 0.5em;
 }
 
 .option__container .option__item {
@@ -45,5 +46,10 @@
 }
 
 .option__hide {
-  transform: translateX(300px);
+  transform: translateX(400px);
+}
+
+.option__footer button {
+  width: 100%;
+  padding: 0.3em 0em;
 }
