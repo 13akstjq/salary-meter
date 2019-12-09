@@ -1,7 +1,12 @@
 // dom
-const date = document.querySelector("#date");
+const dateTime = document.querySelector("#date");
 const salaryFront = document.querySelector("#salaryFront");
 const meter = document.querySelector("#meter");
+const meterContainer = document.querySelector("#meterContainer");
+const mainForm = document.querySelector("#mainForm");
+const mainSalaryDateInput = document.querySelector("#mainSalaryDateInput");
+const mainPreTexSalaryInput = document.querySelector("#mainPreTexSalaryInput");
+let meterInterval;
 // 변수
 let salaryDate,
   preTexSalary,
@@ -24,8 +29,25 @@ const getToday = () => {
 // 오늘 날짜를 셋팅하는 메소드
 const settingDate = () => {
   const { year, month, date } = getToday();
-  date.innerHTML = `${year}.${month}.${date}`;
+  dateTime.innerHTML = `${year}.${month}.${(date + "").padStart(2, 0)}`;
 };
+
+// 메인 폼 제출 이벤트
+const mainFormSubmitHandler = e => {
+  e.preventDefault();
+  const mainPreTexSalary = mainPreTexSalaryInput.value;
+  const mainSalaryDate = mainSalaryDateInput.value;
+  console.log(mainPreTexSalary, mainSalaryDate);
+  if (mainPreTexSalary && mainSalaryDate) {
+    mainForm.classList.toggle("hide");
+    meterContainer.classList.toggle("hide");
+    setStoragePreTexSalary(mainPreTexSalary);
+    setStorageSalaryDate(mainSalaryDate);
+    start(mainSalaryDate, mainPreTexSalary);
+  }
+};
+
+mainForm.addEventListener("submit", mainFormSubmitHandler);
 
 // 크롬 스토리지에 월급날짜 저장하는 메소드
 const setStorageSalaryDate = salaryDate => {
@@ -43,9 +65,19 @@ const getStorageData = () => {
     if (salaryDate) salaryDateInput.value = salaryDate;
     chrome.storage.sync.get("preTexSalary", ({ preTexSalary }) => {
       if (preTexSalary) preTexSalaryInput.value = preTexSalary;
-      if (salaryDate && preTexSalary) start(salaryDate, preTexSalary);
+      console.log(salaryDate, preTexSalary);
+
+      if (salaryDate && preTexSalary) {
+        start(salaryDate, preTexSalary);
+        toggleMainMeter();
+      }
     });
   });
+};
+
+const toggleMainMeter = () => {
+  mainForm.classList.toggle("hide");
+  meterContainer.classList.toggle("hide");
 };
 
 const toStringFormat = money => {
@@ -83,8 +115,8 @@ const start = (salaryDate, preTexSalary) => {
   money = toMoneyFormat(nowSalary.toFixed(2));
 
   money = money.split(".");
-  salaryFront.innerHTML = money[0] + ".";
-  salaryBack.innerHTML = money[1].padStart(2, 0);
+  salaryFront.innerHTML = money[0];
+  salaryBack.innerHTML = ". " + money[1].padStart(2, 0);
   startMeter(salaryPerSec);
 };
 
@@ -93,18 +125,20 @@ const increaseSalary = salaryPerSec => {
   nowSalary += salaryPerSec;
   money = toMoneyFormat(nowSalary.toFixed(2));
   money = money.split(".");
-  salaryFront.innerHTML = money[0] + ".";
-  salaryBack.innerHTML = money[1].padStart(2, 0);
+  salaryFront.innerHTML = money[0];
+  salaryBack.innerHTML = ". " + money[1].padStart(2, 0);
 };
 
 // 미터기 시작
 const startMeter = salaryPerSec => {
-  setInterval(() => {
+  meterInterval = setInterval(() => {
     if (ms == 0) increaseSalary(salaryPerSec);
     ms = ms <= 0 ? 100 : ms - 1;
     meter.innerHTML = ms;
   }, 10);
 };
+
+const stopMeter = () => clearInterval(meterInterval);
 
 // 현재까지 번 돈 구하기
 const getNowSalary = (salaryPerSec, lastSalaryDate) => {
@@ -138,7 +172,7 @@ const calcNextSalaryDate = salaryDate => {
     nextMonth;
   if (date >= salaryDate) {
     nextMonth = month + 1;
-    if (nextMonth == 12) {
+    if (nextMonth == 13) {
       nextMonth = 1;
       nextYear = year + 1;
     }

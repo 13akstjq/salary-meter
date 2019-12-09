@@ -10,12 +10,13 @@ const optionShowToggle = () => optionContainer.classList.toggle("option__hide");
 const optionSubmitHandler = e => {
   e.preventDefault();
   if (salaryDateInput.value && preTexSalaryInput.value) {
+    if (meterInterval) stopMeter();
     salaryDate = salaryDateInput.value;
     preTexSalary = preTexSalaryInput.value;
-    console.log(salaryDate, preTexSalary);
     setStoragePreTexSalary(preTexSalary);
     setStorageSalaryDate(salaryDate);
     optionContainer.classList.toggle("option__hide");
+    start(salaryDate, preTexSalary);
   }
 };
 
