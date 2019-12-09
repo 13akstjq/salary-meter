@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="css/option.css" />
     <link rel="stylesheet" href="css/main.css" />
-
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
 
@@ -44,19 +47,43 @@
     </form>
     <div class="main__content">
       <div class="land"></div>
-      <div class="meter__container">
+      <form id="mainForm">
+        <ul class="option__list">
+          <li class="option__item">
+            <span class="option__title">돈 받는 날 </span>
+            <input
+              id="mainSalaryDateInput"
+              type="number"
+              class="option__input"
+            />
+          </li>
+          <li class="option__item">
+            <span class="option__title">세전 연봉</span>
+            <input
+              id="mainPreTexSalaryInput"
+              type="number"
+              class="option__input"
+            />
+          </li>
+        </ul>
+        <div class="option__footer">
+          <button class="option__submit">완료</button>
+        </div>
+      </form>
+      <div id="meterContainer" class="meter__container hide">
         <div class="meter__board">
           <div class="meter__board__column">
-            <span id="date">2019.12.08</span>
+            <span id="date"></span>
             <div class="meter" id="meter">1000</div>
           </div>
+
           <div class="salary__container">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="18"
               viewBox="0 0 24 24"
-              fill="white"
+              fill="#ececec"
               class="currency"
             >
               <path
@@ -69,7 +96,6 @@
             </span>
           </div>
         </div>
-        <div class="meter__wall"></div>
       </div>
     </div>
     <script src="/js/func.js"></script>

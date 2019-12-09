@@ -1,16 +1,19 @@
 body {
-  background: linear-gradient(36deg, #55efc4, #2ecc71);
+  background: linear-gradient(36deg, #7fcec9, #35948e);
   margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  overflow-y: hidden;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 ul,
 li {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 input {
@@ -21,16 +24,19 @@ input {
 }
 
 button {
-  background: linear-gradient(36deg, #2ecc71, #2ecc71);
+  background: linear-gradient(36deg, #7fcec9, #35948e);
   border: none;
   border-radius: 0.3em;
   cursor: pointer;
+  font-weight: 900;
+  font-size: 1.3em;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .main__content {
   position: relative;
   width: 700px;
-  height: 90vh;
+  height: 80vh;
   /* background: gold; */
   display: flex;
   justify-content: center;
@@ -45,46 +51,45 @@ button {
 
 .land::before {
   content: "";
-  width: 300px;
+  width: 70px;
   height: 100%;
   background-color: brown;
   position: absolute;
   top: 0px;
   left: 0px;
-  transform: skewY(-38deg) translate(-300px, -117px);
+  transform: skewY(-38deg) translate(-70px, -27px);
 }
 
 .land::after {
   content: "";
   width: 100%;
-  height: 235px;
+  height: 54px;
   background-color: darkred;
   position: absolute;
   bottom: 0;
   left: 0;
-  transform: skewX(-52deg) translate(150px, 235px);
+  transform: skewX(-52deg) translate(33px, 53px);
 }
 
-.main__content .meter__container {
+.main__content .meter__container,
+#mainForm {
   position: absolute;
-  top: 50%;
+  top: 70%;
   width: 40%;
-  height: 50%;
-  display: grid;
-  grid-template-rows: 3fr 7fr;
   margin: auto;
+  transition: 0.5s ease-in;
 }
 
 .main__content .meter__container .meter__board {
   display: grid;
   grid-template-rows: 1fr 2fr;
-  color: white;
+  color: rgba(255, 255, 255, 0.9);
   background-color: black;
   padding: 1em 1.5em;
+  border-radius: 0.5em;
 }
 
 .meter__board .meter__board__column {
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -94,21 +99,52 @@ button {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .meter__board .salary__container .salary #salaryFront {
-  font-size: 2.5em;
+  font-size: 2.8em;
   margin-left: 0.3em;
+  font-weight: 600;
 }
 .meter__board .salary__container .salary #salaryBack {
   font-size: 1.5em;
 }
 .currency {
-  margin-bottom: 0.3em;
-}
-.meter__wall {
-  border: 2px solid;
+  margin-bottom: 0.5em;
 }
 
-#date {
+.hide {
+  transform: translateY(300px);
+}
+
+#mainForm {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1em;
+  border-radius: 5px;
+}
+#mainForm .option__item {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 1em;
+  align-items: center;
+}
+
+#mainForm .option__item .option__title {
+  text-align: right;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.2em;
+  font-weight: 900;
+}
+
+#mainForm .option__item .option__input {
+  margin-left: 0.3em;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#date,
+#meter {
+  font-size: 1.3em;
+  font-weight: 500;
 }

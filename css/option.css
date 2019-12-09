@@ -10,17 +10,19 @@
   right: 30px;
   top: 50px;
   display: inline-block;
-  background-color: ghostwhite;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 0.5em;
   transition: 0.3s ease-in;
   padding: 0.7em;
   z-index: 10;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .option__header {
   display: flex;
   justify-content: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 1em;
 }
 
 .option__container .option__list {
@@ -34,7 +36,10 @@
 }
 
 .option__container .option__item .option__title {
+  font-size: 1.2em;
   text-align: right;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .option__container .option__item .option__input {
