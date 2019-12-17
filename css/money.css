@@ -1,0 +1,67 @@
+.coin {
+  display: inline-block;
+  position: absolute;
+  animation: drop 0.7s ease-in;
+  width: 25px;
+  height: 25px;
+}
+.coin__top {
+  background-color: gold;
+  border: 3px solid #f6a300;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+@keyframes drop {
+  0% {
+    transform: translate3d(660px, -500px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.coin__top::before {
+  content: "₩";
+  color: #f6a300;
+}
+
+.coin__bottom {
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  background: linear-gradient(#bf7c04, #aa650c);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.drop__animation {
+}
+
+.paper {
+  border: 3px solid #4bb44d;
+  background-color: #abd37d;
+  width: 60px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.paper::after {
+  content: "₩";
+  font-size: 0.9em;
+  color: darkgreen;
+  font-weight: 600;
+  width: 25px;
+  height: 20px;
+  background-color: #4bb44d;
+  text-align: center;
+  border-radius: 50%;
+  vertical-align: center;
+}

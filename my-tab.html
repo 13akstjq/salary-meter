@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="css/option.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/money.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap"
       rel="stylesheet"
@@ -46,8 +47,8 @@
       </div>
     </form>
     <div class="main__content">
-      <div class="land"></div>
-      <form id="mainForm">
+      <div class="land" id="land"></div>
+      <form id="mainForm" class="hide">
         <ul class="option__list">
           <li class="option__item">
             <span class="option__title">돈 받는 날 </span>
@@ -80,10 +81,10 @@
           <div class="salary__container">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="22"
+              height="22"
               viewBox="0 0 24 24"
-              fill="#ececec"
+              fill="#bdc3c7"
               class="currency"
             >
               <path
@@ -101,5 +102,6 @@
     <script src="/js/func.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/option.js"></script>
+    <script src="/js/dropMoney.js"></script>
   </body>
 </html>

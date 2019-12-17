@@ -6,6 +6,7 @@ const meterContainer = document.querySelector("#meterContainer");
 const mainForm = document.querySelector("#mainForm");
 const mainSalaryDateInput = document.querySelector("#mainSalaryDateInput");
 const mainPreTexSalaryInput = document.querySelector("#mainPreTexSalaryInput");
+
 let meterInterval;
 // 변수
 let salaryDate,
@@ -15,7 +16,8 @@ let salaryDate,
   insurance = [],
   nowSalary,
   money,
-  ms = 100;
+  ms = 100,
+  moneyType = "coin";
 
 // 오늘 날짜를 가져오는 함수
 const getToday = () => {
@@ -39,8 +41,8 @@ const mainFormSubmitHandler = e => {
   const mainSalaryDate = mainSalaryDateInput.value;
   console.log(mainPreTexSalary, mainSalaryDate);
   if (mainPreTexSalary && mainSalaryDate) {
-    mainForm.classList.toggle("hide");
-    meterContainer.classList.toggle("hide");
+    mainForm.classList.add("hide");
+    meterContainer.classList.remove("hide");
     setStoragePreTexSalary(mainPreTexSalary);
     setStorageSalaryDate(mainSalaryDate);
     start(mainSalaryDate, mainPreTexSalary);
@@ -65,19 +67,22 @@ const getStorageData = () => {
     if (salaryDate) salaryDateInput.value = salaryDate;
     chrome.storage.sync.get("preTexSalary", ({ preTexSalary }) => {
       if (preTexSalary) preTexSalaryInput.value = preTexSalary;
-      console.log(salaryDate, preTexSalary);
+      // console.log(salaryDate, preTexSalary);
 
       if (salaryDate && preTexSalary) {
         start(salaryDate, preTexSalary);
         toggleMainMeter();
+        showMeter();
       }
     });
   });
 };
 
-const toggleMainMeter = () => {
-  mainForm.classList.toggle("hide");
-  meterContainer.classList.toggle("hide");
+const toggleMainMeter = () => {};
+
+const showMeter = () => {
+  mainForm.classList.add("hide");
+  meterContainer.classList.remove("hide");
 };
 
 const toStringFormat = money => {
@@ -112,6 +117,7 @@ const start = (salaryDate, preTexSalary) => {
     salaryPerSec = (postTexMonthSalary / totalTime).toFixed(2) / 1;
 
   nowSalary = getNowSalary(salaryPerSec, lastSalaryDate);
+  moneyInit(nowSalary, salaryPerSec);
   money = toMoneyFormat(nowSalary.toFixed(2));
 
   money = money.split(".");

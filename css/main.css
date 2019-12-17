@@ -9,6 +9,10 @@ body {
   font-family: "Noto Sans KR", sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 ul,
 li {
   list-style: none;
@@ -43,10 +47,11 @@ button {
 }
 
 .main__content .land {
-  width: 300px;
-  height: 300px;
+  width: 306px;
+  height: 306px;
   background-color: green;
   transform: perspective(500px) rotate(-40deg) skew(25deg);
+  padding: 3px;
 }
 
 .land::before {
@@ -58,6 +63,7 @@ button {
   top: 0px;
   left: 0px;
   transform: skewY(-38deg) translate(-70px, -27px);
+  z-index: -2;
 }
 
 .land::after {
@@ -69,22 +75,27 @@ button {
   bottom: 0;
   left: 0;
   transform: skewX(-52deg) translate(33px, 53px);
+  z-index: -2;
 }
 
 .main__content .meter__container,
 #mainForm {
   position: absolute;
-  top: 70%;
-  width: 40%;
+  top: 60%;
+  width: 50%;
   margin: auto;
   transition: 0.5s ease-in;
+}
+
+#mainForm {
+  width: 40%;
 }
 
 .main__content .meter__container .meter__board {
   display: grid;
   grid-template-rows: 1fr 2fr;
-  color: rgba(255, 255, 255, 0.9);
-  background-color: black;
+  color: #bdc3c7;
+  background-color: #34495e;
   padding: 1em 1.5em;
   border-radius: 0.5em;
 }
@@ -99,11 +110,11 @@ button {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  color: rgba(255, 255, 255, 0.9);
+  color: #bdc3c7;
 }
 
 .meter__board .salary__container .salary #salaryFront {
-  font-size: 2.8em;
+  font-size: 3.5em;
   margin-left: 0.3em;
   font-weight: 600;
 }
@@ -111,7 +122,7 @@ button {
   font-size: 1.5em;
 }
 .currency {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.7em;
 }
 
 .hide {
