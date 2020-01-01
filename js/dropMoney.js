@@ -1,12 +1,12 @@
 // 상수
-const COIN_UNIT = 500;
+const COIN_UNIT = 10000;
 const PAPER_UNIT = 1000;
-
+const startX = 4;
 const land = document.querySelector("#land");
 
 let papers = [],
   coins = [],
-  x = 3,
+  x = startX,
   y = 0,
   z = 0;
 stack = [];
@@ -36,12 +36,11 @@ const makeCoin = () => {
   coin.classList.add("coin");
   const coinTop = document.createElement("div");
   coinTop.classList.add("coin__top");
-
   const coinBottom = document.createElement("div");
   coinBottom.classList.add("coin__bottom");
 
-  coin.appendChild(coinTop);
   coin.appendChild(coinBottom);
+  coin.appendChild(coinTop);
 
   coin.style.left = `${x}px`;
   coin.style.top = `${y}px`;
@@ -51,11 +50,34 @@ const makeCoin = () => {
 
 // 돈이 떨어질 다음 좌표를 구하는 메소드
 const calcNextPos = () => {
-  if (x + 25 < 300) {
-    x += 25;
-  } else if (y + 25 < 300) {
+  // 다음 x가
+  // let N = 300 - 12 * Math.floor(z / 3);
+  // if (x + 25 < N - 12 + z * 3 + z) x += 25;
+  // else {
+  //   x = startX + 300 - N + 3 * z + z;
+  //   y += 25;
+  // }
+
+  // if (y >= N - 12 + -z * 3) {
+  //   z++;
+
+  //   N = 300 - 12 * Math.floor(z / 3);
+  //   y = -3 * z + 300 - N;
+  //   x = startX + z * 3 + z + 300 - N;
+  // }
+
+  let N = 300;
+  if (x + 25 < N + z * 3 + z) x += 25;
+  else {
+    x = startX + 3 * z + z;
     y += 25;
-    x = 3;
+  }
+
+  if (y >= N - 12 + -z * 3) {
+    z++;
+
+    y = -3 * z;
+    x = startX + z * 3 + z;
   }
 };
 
@@ -69,9 +91,9 @@ const dropByCount = cnt => {
 // 현재 번 돈 드랍
 const dropStart = () => {
   const dropInterval = setInterval(() => {
-    dropByCount(3);
+    dropByCount(10);
     if (coins.length == 0) clearInterval(dropInterval);
-  }, 40);
+  }, 100);
 };
 
 // 변수를 초기화하는 메소드
@@ -96,10 +118,5 @@ const moneyInit = (nowSalary, salaryPerSec) => {
   let moneyCnt = Math.floor(nowSalary / moneyUnit);
   console.log(moneyCnt);
   createMoneyDummy(moneyCnt);
-  ~(
-    //   coins.push(makeCoin());
-    // 셋팅이 다 됐다면 돈 떨어트리기
-    //   console.log(coins);
-    dropStart()
-  );
+  dropStart();
 };

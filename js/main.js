@@ -31,7 +31,9 @@ const getToday = () => {
 // 오늘 날짜를 셋팅하는 메소드
 const settingDate = () => {
   const { year, month, date } = getToday();
-  dateTime.innerHTML = `${year}.${month}.${(date + "").padStart(2, 0)}`;
+  dateTime.innerHTML = `${year}.${(month + "").padStart(2, 0)}.${(
+    date + ""
+  ).padStart(2, 0)}`;
 };
 
 // 메인 폼 제출 이벤트
