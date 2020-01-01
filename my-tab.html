@@ -35,11 +35,23 @@
       <ul class="option__list">
         <li class="option__item">
           <span class="option__title">돈 받는 날 </span>
-          <input id="salaryDateInput" type="number" class="option__input" />
+          <input
+            id="salaryDateInput"
+            type="number"
+            class="option__input"
+            min="1"
+            max="31"
+          />
         </li>
         <li class="option__item">
           <span class="option__title">세전 연봉</span>
-          <input id="preTexSalaryInput" type="number" class="option__input" />
+          <input
+            id="preTexSalaryInput"
+            type="number"
+            class="option__input"
+            min="1000"
+            max="10000"
+          />
         </li>
       </ul>
       <div class="option__footer">
@@ -56,6 +68,8 @@
               id="mainSalaryDateInput"
               type="number"
               class="option__input"
+              min="1"
+              max="31"
             />
           </li>
           <li class="option__item">
@@ -64,6 +78,8 @@
               id="mainPreTexSalaryInput"
               type="number"
               class="option__input"
+              min="1000"
+              max="10000"
             />
           </li>
         </ul>

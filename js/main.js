@@ -69,12 +69,12 @@ const getStorageData = () => {
     if (salaryDate) salaryDateInput.value = salaryDate;
     chrome.storage.sync.get("preTexSalary", ({ preTexSalary }) => {
       if (preTexSalary) preTexSalaryInput.value = preTexSalary;
-      // console.log(salaryDate, preTexSalary);
 
       if (salaryDate && preTexSalary) {
         start(salaryDate, preTexSalary);
-        toggleMainMeter();
         showMeter();
+      } else {
+        hideMeter();
       }
     });
   });
@@ -85,6 +85,11 @@ const toggleMainMeter = () => {};
 const showMeter = () => {
   mainForm.classList.add("hide");
   meterContainer.classList.remove("hide");
+};
+
+const hideMeter = () => {
+  mainForm.classList.remove("hide");
+  meterContainer.classList.add("hide");
 };
 
 const toStringFormat = money => {

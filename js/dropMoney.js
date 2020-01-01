@@ -116,7 +116,6 @@ const moneyInit = (nowSalary, salaryPerSec) => {
   clearLand();
   let moneyUnit = moneyType === "coin" ? COIN_UNIT : PAPER_UNIT;
   let moneyCnt = Math.floor(nowSalary / moneyUnit);
-  console.log(moneyCnt);
   createMoneyDummy(moneyCnt);
   dropStart();
 };
